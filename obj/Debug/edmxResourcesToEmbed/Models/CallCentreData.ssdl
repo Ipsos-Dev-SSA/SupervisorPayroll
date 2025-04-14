@@ -1,0 +1,888 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CallCentreTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="aspnet_Applications">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+    </Key>
+    <Property Name="ApplicationName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="LoweredApplicationName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="aspnet_Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="PasswordFormat" Type="int" Nullable="false" />
+    <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="MobilePIN" Type="nvarchar" MaxLength="16" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="LoweredEmail" Type="nvarchar" MaxLength="256" />
+    <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="256" />
+    <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="128" />
+    <Property Name="IsApproved" Type="bit" Nullable="false" />
+    <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+    <Property Name="LastPasswordChangedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastLockoutDate" Type="datetime" Nullable="false" />
+    <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
+    <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Nullable="false" />
+    <Property Name="Comment" Type="ntext" />
+  </EntityType>
+  <EntityType Name="aspnet_Paths">
+    <Key>
+      <PropertyRef Name="PathId" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PathId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Path" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="LoweredPath" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_PersonalizationAllUsers">
+    <Key>
+      <PropertyRef Name="PathId" />
+    </Key>
+    <Property Name="PathId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PageSettings" Type="image" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_PersonalizationPerUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PathId" Type="uniqueidentifier" />
+    <Property Name="UserId" Type="uniqueidentifier" />
+    <Property Name="PageSettings" Type="image" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_Profile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PropertyNames" Type="ntext" Nullable="false" />
+    <Property Name="PropertyValuesString" Type="ntext" Nullable="false" />
+    <Property Name="PropertyValuesBinary" Type="image" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="LoweredRoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="aspnet_SchemaVersions">
+    <Key>
+      <PropertyRef Name="Feature" />
+      <PropertyRef Name="CompatibleSchemaVersion" />
+    </Key>
+    <Property Name="Feature" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="CompatibleSchemaVersion" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="IsCurrentVersion" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="LoweredUserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+    <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+    <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+    <Property Name="CountryID" Type="int" />
+  </EntityType>
+  <EntityType Name="aspnet_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_WebEvent_Events">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="char" MaxLength="32" Nullable="false" />
+    <Property Name="EventTimeUtc" Type="datetime" Nullable="false" />
+    <Property Name="EventTime" Type="datetime" Nullable="false" />
+    <Property Name="EventType" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="EventSequence" Type="decimal" Precision="19" Scale="0" Nullable="false" />
+    <Property Name="EventOccurrence" Type="decimal" Precision="19" Scale="0" Nullable="false" />
+    <Property Name="EventCode" Type="int" Nullable="false" />
+    <Property Name="EventDetailCode" Type="int" Nullable="false" />
+    <Property Name="Message" Type="nvarchar" MaxLength="1024" />
+    <Property Name="ApplicationPath" Type="nvarchar" MaxLength="256" />
+    <Property Name="ApplicationVirtualPath" Type="nvarchar" MaxLength="256" />
+    <Property Name="MachineName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="RequestUrl" Type="nvarchar" MaxLength="1024" />
+    <Property Name="ExceptionType" Type="nvarchar" MaxLength="256" />
+    <Property Name="Details" Type="ntext" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FCProjectRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupervisorID" Type="int" />
+    <Property Name="ProjectID" Type="int" />
+    <Property Name="FieldCoordinatorID" Type="int" />
+    <Property Name="NumberOfInterviews" Type="int" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TotalDue" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="DateRequested" Type="datetime" Nullable="false" />
+    <Property Name="AddedBy" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="FieldCoordinator">
+    <Key>
+      <PropertyRef Name="FieldCoordinatorID" />
+    </Key>
+    <Property Name="FieldCoordinatorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InterviewOutcome">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" />
+    <Property Name="StatusCode" Type="int" />
+    <Property Name="GroupID" Type="int" />
+  </EntityType>
+  <EntityType Name="lutCheckInLevel">
+    <Key>
+      <PropertyRef Name="CheckInLevelID" />
+    </Key>
+    <Property Name="CheckInLevelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CheckInLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="Discription" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="LutPhase">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PhaseStatusId" Type="int" Nullable="false" />
+    <Property Name="PhaseOutcomeId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LutPhaseOutcome">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="PhaseStatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LutPhaseStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LutScreeningPhase">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EligibilityCategory" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="EligibilityDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="EligibilityCode" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lutStatus">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PaymentDetails">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestID" Type="int" />
+    <Property Name="PaymentAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PhaseOutcomes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="PhaseStatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="ProjectNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PayRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SupervisionFee" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Supervisor">
+    <Key>
+      <PropertyRef Name="SupervisorID" />
+    </Key>
+    <Property Name="SupervisorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Region" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="PCNumber" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblAgentActivity">
+    <Key>
+      <PropertyRef Name="AgentActiviryID" />
+    </Key>
+    <Property Name="AgentActiviryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RespondentID" Type="int" />
+    <Property Name="AgentID" Type="int" />
+    <Property Name="DateAdded" Type="datetime" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+    <Property Name="Contacts" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phase" Type="nvarchar(max)" />
+    <Property Name="ScreeningID" Type="int" />
+    <Property Name="InterviewID" Type="int" />
+    <Property Name="Resp_Surname" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tblAgents">
+    <Key>
+      <PropertyRef Name="AgentID" />
+    </Key>
+    <Property Name="AgentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CountryID" Type="int" />
+  </EntityType>
+  <EntityType Name="tblRespondent">
+    <Key>
+      <PropertyRef Name="RespondentID" />
+    </Key>
+    <Property Name="RespondentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ResonseId" Type="int" />
+    <Property Name="InstanceID" Type="int" />
+    <Property Name="RESPID" Type="int" />
+    <Property Name="Q1" Type="datetime" />
+    <Property Name="Q2" Type="nvarchar" MaxLength="50" />
+    <Property Name="Q3" Type="nvarchar" MaxLength="50" />
+    <Property Name="Q202_EDD" Type="datetime" />
+    <Property Name="Resp_Surname" Type="varchar(max)" />
+    <Property Name="Resp_FirstName" Type="varchar(max)" />
+    <Property Name="Resp_Oth" Type="varchar(max)" />
+    <Property Name="PhoneNumber" Type="varchar(max)" />
+    <Property Name="Q607_C_1" Type="varchar(max)" />
+    <Property Name="Q608a_q608_C_1" Type="varchar(max)" />
+    <Property Name="Q609a_q609_C_1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Q610a_q610_C_1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Q611a_q611_C_1" Type="nvarchar" MaxLength="50" />
+    <Property Name="Q612_Phone_C_1" Type="nvarchar" MaxLength="50" />
+    <Property Name="TimeZone" Type="time" Precision="7" />
+    <Property Name="Q610_" Type="nvarchar(max)" />
+    <Property Name="CheckIn1" Type="bit" />
+    <Property Name="CheckIn1Date" Type="datetime" />
+    <Property Name="CheckIn2" Type="bit" />
+    <Property Name="CheckIn2Date" Type="datetime" />
+    <Property Name="CheckIn3" Type="bit" />
+    <Property Name="CheckIn3Date" Type="datetime" />
+    <Property Name="CheckIn4" Type="bit" />
+    <Property Name="CheckIn4Date" Type="datetime" />
+    <Property Name="EDD_Latest" Type="datetime" />
+    <Property Name="CheckInLevelID" Type="int" />
+    <Property Name="CheckInLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="CheckInDate" Type="datetime" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="DateAdded" Type="datetime" />
+    <Property Name="AddedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CheckIn1StatusId" Type="int" />
+    <Property Name="CheckIn2StatusId" Type="int" />
+    <Property Name="CheckIn3StatusId" Type="int" />
+    <Property Name="CheckIn4StatusId" Type="int" />
+    <Property Name="CheckIn5StatusId" Type="int" />
+    <Property Name="PhysicalAttempt1" Type="bit" />
+    <Property Name="PhysicalAttempt2" Type="bit" />
+    <Property Name="PhysicalAttempt3" Type="bit" />
+    <Property Name="CheckIn5" Type="bit" />
+    <Property Name="CheckIn5Date" Type="datetime" />
+    <Property Name="PhysicalAttempt1Date" Type="datetime" />
+    <Property Name="PhysicalAttempt2Date" Type="datetime" />
+    <Property Name="PhysicalAttempt3Date" Type="datetime" />
+    <Property Name="VisitLevel" Type="nvarchar(max)" />
+    <Property Name="ScreeningID" Type="int" />
+    <Property Name="InterviewID" Type="int" />
+    <Property Name="ScreeningDate" Type="datetime" />
+    <Property Name="InterviewDate" Type="datetime" />
+    <Property Name="PhysicalAttemptStatusId1" Type="int" />
+    <Property Name="PhysicalAttemptStatusId2" Type="int" />
+    <Property Name="PhysicalAttemptStatusId3" Type="int" />
+    <Property Name="ScreeningLevel" Type="nvarchar(max)" />
+    <Property Name="InterviewerLevel" Type="nvarchar(max)" />
+    <Property Name="PhaseStatus" Type="nvarchar(max)" />
+    <Property Name="PhaseOutcome" Type="nvarchar(max)" />
+    <Property Name="ScreeningCheckIn" Type="bit" />
+    <Property Name="InterviewCheckIn" Type="bit" />
+    <Property Name="interviewStatus" Type="nvarchar(max)" />
+    <Property Name="InterviewOutcome" Type="nvarchar(max)" />
+    <Property Name="CountryID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SupervisorPayroll.dbo.tblStaging' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tblStaging">
+    <Key>
+      <PropertyRef Name="St_Id" />
+    </Key>
+    <Property Name="St_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="nvarchar(max)" />
+    <Property Name="CellDescription" Type="nvarchar(max)" />
+    <Property Name="technicalid" Type="nvarchar(max)" />
+    <Property Name="cellid" Type="nvarchar(max)" />
+    <Property Name="celltarget" Type="nvarchar(max)" />
+    <Property Name="cellpreference" Type="nvarchar(max)" />
+    <Property Name="CountryID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SupervisorPayroll.dbo.vw_aspnet_Roles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_aspnet_Roles">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="LoweredRoleName" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="LoweredRoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SupervisorPayroll.dbo.vw_aspnet_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_aspnet_Users">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="LoweredUserName" />
+      <PropertyRef Name="IsAnonymous" />
+      <PropertyRef Name="LastActivityDate" />
+    </Key>
+    <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="LoweredUserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+    <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+    <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SupervisorPayroll.dbo.vw_aspnet_UsersInRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_aspnet_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__aspnet_Me__Appli__3A81B327">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Membership">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Me__UserI__3B75D760">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_Membership">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pa__Appli__6C190EBB">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Paths">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__PathI__71D1E811">
+    <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
+    <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Paths">
+        <PropertyRef Name="PathId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationAllUsers">
+        <PropertyRef Name="PathId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__PathI__75A278F5">
+    <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
+    <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Paths">
+        <PropertyRef Name="PathId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationPerUser">
+        <PropertyRef Name="PathId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__UserI__76969D2E">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
+    <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationPerUser">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pr__UserI__4F7CD00D">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_Profile">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Ro__Appli__59063A47">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Roles">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Us__Appli__2A4B4B5E">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Users">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Us__RoleI__5DCAEF64">
+    <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="1" />
+    <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="aspnet_UsersInRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Us__UserI__5CD6CB2B">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_UsersInRoles" Type="Self.aspnet_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_UsersInRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FCProject__Proje__32CB82C6">
+    <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+    <End Role="FCProjectRequest" Type="Self.FCProjectRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="FCProjectRequest">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LutPhase__PhaseO__46136164">
+    <End Role="LutPhaseOutcome" Type="Self.LutPhaseOutcome" Multiplicity="1" />
+    <End Role="LutPhase" Type="Self.LutPhase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LutPhaseOutcome">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LutPhase">
+        <PropertyRef Name="PhaseOutcomeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LutPhase__PhaseS__451F3D2B">
+    <End Role="LutPhaseStatus" Type="Self.LutPhaseStatus" Multiplicity="1" />
+    <End Role="LutPhase" Type="Self.LutPhase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LutPhaseStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LutPhase">
+        <PropertyRef Name="PhaseStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LutPhaseO__Phase__36D11DD4">
+    <End Role="LutPhaseStatus" Type="Self.LutPhaseStatus" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LutPhaseOutcome" Type="Self.LutPhaseOutcome" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LutPhaseStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LutPhaseOutcome">
+        <PropertyRef Name="PhaseStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PaymentDe__Reque__38845C1C">
+    <End Role="FCProjectRequest" Type="Self.FCProjectRequest" Multiplicity="0..1" />
+    <End Role="PaymentDetails" Type="Self.PaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FCProjectRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="PaymentDetails">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Supervisor">
+    <End Role="Supervisor" Type="Self.Supervisor" Multiplicity="0..1" />
+    <End Role="FCProjectRequest" Type="Self.FCProjectRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supervisor">
+        <PropertyRef Name="SupervisorID" />
+      </Principal>
+      <Dependent Role="FCProjectRequest">
+        <PropertyRef Name="SupervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_lutCheckInLevel_lutCheckInLevel">
+    <End Role="lutCheckInLevel" Type="Self.lutCheckInLevel" Multiplicity="1" />
+    <End Role="lutCheckInLevel1" Type="Self.lutCheckInLevel" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="lutCheckInLevel">
+        <PropertyRef Name="CheckInLevelID" />
+      </Principal>
+      <Dependent Role="lutCheckInLevel1">
+        <PropertyRef Name="CheckInLevelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAgentActivity_lutStatus">
+    <End Role="lutStatus" Type="Self.lutStatus" Multiplicity="0..1" />
+    <End Role="tblAgentActivity" Type="Self.tblAgentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lutStatus">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="tblAgentActivity">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAgentActivity_tblAgents">
+    <End Role="tblAgents" Type="Self.tblAgents" Multiplicity="0..1" />
+    <End Role="tblAgentActivity" Type="Self.tblAgentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAgents">
+        <PropertyRef Name="AgentID" />
+      </Principal>
+      <Dependent Role="tblAgentActivity">
+        <PropertyRef Name="AgentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAgentActivity_tblRespondent">
+    <End Role="tblRespondent" Type="Self.tblRespondent" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblAgentActivity" Type="Self.tblAgentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRespondent">
+        <PropertyRef Name="RespondentID" />
+      </Principal>
+      <Dependent Role="tblAgentActivity">
+        <PropertyRef Name="RespondentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAgents_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="tblAgents" Type="Self.tblAgents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="tblAgents">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRespondent_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="tblRespondent" Type="Self.tblRespondent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="tblRespondent">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRespondent_lutCheckInLevel">
+    <End Role="lutCheckInLevel" Type="Self.lutCheckInLevel" Multiplicity="0..1" />
+    <End Role="tblRespondent" Type="Self.tblRespondent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lutCheckInLevel">
+        <PropertyRef Name="CheckInLevelID" />
+      </Principal>
+      <Dependent Role="tblRespondent">
+        <PropertyRef Name="CheckInLevelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRespondent_lutStatus">
+    <End Role="lutStatus" Type="Self.lutStatus" Multiplicity="0..1" />
+    <End Role="tblRespondent" Type="Self.tblRespondent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lutStatus">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="tblRespondent">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CallCentreTrackerModelStoreContainer">
+    <EntitySet Name="aspnet_Applications" EntityType="Self.aspnet_Applications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_Membership" EntityType="Self.aspnet_Membership" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_Paths" EntityType="Self.aspnet_Paths" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_PersonalizationAllUsers" EntityType="Self.aspnet_PersonalizationAllUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_PersonalizationPerUser" EntityType="Self.aspnet_PersonalizationPerUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_Profile" EntityType="Self.aspnet_Profile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_Roles" EntityType="Self.aspnet_Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_SchemaVersions" EntityType="Self.aspnet_SchemaVersions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_UsersInRoles" EntityType="Self.aspnet_UsersInRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FCProjectRequest" EntityType="Self.FCProjectRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FieldCoordinator" EntityType="Self.FieldCoordinator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InterviewOutcome" EntityType="Self.InterviewOutcome" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="lutCheckInLevel" EntityType="Self.lutCheckInLevel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LutPhase" EntityType="Self.LutPhase" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LutPhaseOutcome" EntityType="Self.LutPhaseOutcome" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LutPhaseStatus" EntityType="Self.LutPhaseStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LutScreeningPhase" EntityType="Self.LutScreeningPhase" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="lutStatus" EntityType="Self.lutStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhaseOutcomes" EntityType="Self.PhaseOutcomes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supervisor" EntityType="Self.Supervisor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAgentActivity" EntityType="Self.tblAgentActivity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAgents" EntityType="Self.tblAgents" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRespondent" EntityType="Self.tblRespondent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblStaging" EntityType="Self.tblStaging" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tblStaging].[St_Id] AS [St_Id], 
+    [tblStaging].[id] AS [id], 
+    [tblStaging].[CellDescription] AS [CellDescription], 
+    [tblStaging].[technicalid] AS [technicalid], 
+    [tblStaging].[cellid] AS [cellid], 
+    [tblStaging].[celltarget] AS [celltarget], 
+    [tblStaging].[cellpreference] AS [cellpreference], 
+    [tblStaging].[CountryID] AS [CountryID]
+    FROM [dbo].[tblStaging] AS [tblStaging]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_aspnet_Roles" EntityType="Self.vw_aspnet_Roles" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_aspnet_Roles].[ApplicationId] AS [ApplicationId], 
+    [vw_aspnet_Roles].[RoleId] AS [RoleId], 
+    [vw_aspnet_Roles].[RoleName] AS [RoleName], 
+    [vw_aspnet_Roles].[LoweredRoleName] AS [LoweredRoleName], 
+    [vw_aspnet_Roles].[Description] AS [Description]
+    FROM [dbo].[vw_aspnet_Roles] AS [vw_aspnet_Roles]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_aspnet_Users" EntityType="Self.vw_aspnet_Users" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_aspnet_Users].[ApplicationId] AS [ApplicationId], 
+    [vw_aspnet_Users].[UserId] AS [UserId], 
+    [vw_aspnet_Users].[UserName] AS [UserName], 
+    [vw_aspnet_Users].[LoweredUserName] AS [LoweredUserName], 
+    [vw_aspnet_Users].[MobileAlias] AS [MobileAlias], 
+    [vw_aspnet_Users].[IsAnonymous] AS [IsAnonymous], 
+    [vw_aspnet_Users].[LastActivityDate] AS [LastActivityDate]
+    FROM [dbo].[vw_aspnet_Users] AS [vw_aspnet_Users]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_aspnet_UsersInRoles" EntityType="Self.vw_aspnet_UsersInRoles" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_aspnet_UsersInRoles].[UserId] AS [UserId], 
+    [vw_aspnet_UsersInRoles].[RoleId] AS [RoleId]
+    FROM [dbo].[vw_aspnet_UsersInRoles] AS [vw_aspnet_UsersInRoles]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__aspnet_Me__Appli__3A81B327" Association="Self.FK__aspnet_Me__Appli__3A81B327">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Me__UserI__3B75D760" Association="Self.FK__aspnet_Me__UserI__3B75D760">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pa__Appli__6C190EBB" Association="Self.FK__aspnet_Pa__Appli__6C190EBB">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__PathI__71D1E811" Association="Self.FK__aspnet_Pe__PathI__71D1E811">
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+      <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__PathI__75A278F5" Association="Self.FK__aspnet_Pe__PathI__75A278F5">
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+      <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__UserI__76969D2E" Association="Self.FK__aspnet_Pe__UserI__76969D2E">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pr__UserI__4F7CD00D" Association="Self.FK__aspnet_Pr__UserI__4F7CD00D">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Ro__Appli__59063A47" Association="Self.FK__aspnet_Ro__Appli__59063A47">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Us__Appli__2A4B4B5E" Association="Self.FK__aspnet_Us__Appli__2A4B4B5E">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Us__RoleI__5DCAEF64" Association="Self.FK__aspnet_Us__RoleI__5DCAEF64">
+      <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+      <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Us__UserI__5CD6CB2B" Association="Self.FK__aspnet_Us__UserI__5CD6CB2B">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_UsersInRoles" EntitySet="aspnet_UsersInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FCProject__Proje__32CB82C6" Association="Self.FK__FCProject__Proje__32CB82C6">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LutPhase__PhaseO__46136164" Association="Self.FK__LutPhase__PhaseO__46136164">
+      <End Role="LutPhaseOutcome" EntitySet="LutPhaseOutcome" />
+      <End Role="LutPhase" EntitySet="LutPhase" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LutPhase__PhaseS__451F3D2B" Association="Self.FK__LutPhase__PhaseS__451F3D2B">
+      <End Role="LutPhaseStatus" EntitySet="LutPhaseStatus" />
+      <End Role="LutPhase" EntitySet="LutPhase" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LutPhaseO__Phase__36D11DD4" Association="Self.FK__LutPhaseO__Phase__36D11DD4">
+      <End Role="LutPhaseStatus" EntitySet="LutPhaseStatus" />
+      <End Role="LutPhaseOutcome" EntitySet="LutPhaseOutcome" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PaymentDe__Reque__38845C1C" Association="Self.FK__PaymentDe__Reque__38845C1C">
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequest" />
+      <End Role="PaymentDetails" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Supervisor" Association="Self.FK_Employee_Supervisor">
+      <End Role="Supervisor" EntitySet="Supervisor" />
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_lutCheckInLevel_lutCheckInLevel" Association="Self.FK_lutCheckInLevel_lutCheckInLevel">
+      <End Role="lutCheckInLevel" EntitySet="lutCheckInLevel" />
+      <End Role="lutCheckInLevel1" EntitySet="lutCheckInLevel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAgentActivity_lutStatus" Association="Self.FK_tblAgentActivity_lutStatus">
+      <End Role="lutStatus" EntitySet="lutStatus" />
+      <End Role="tblAgentActivity" EntitySet="tblAgentActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAgentActivity_tblAgents" Association="Self.FK_tblAgentActivity_tblAgents">
+      <End Role="tblAgents" EntitySet="tblAgents" />
+      <End Role="tblAgentActivity" EntitySet="tblAgentActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAgentActivity_tblRespondent" Association="Self.FK_tblAgentActivity_tblRespondent">
+      <End Role="tblRespondent" EntitySet="tblRespondent" />
+      <End Role="tblAgentActivity" EntitySet="tblAgentActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAgents_Country" Association="Self.FK_tblAgents_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="tblAgents" EntitySet="tblAgents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRespondent_Country" Association="Self.FK_tblRespondent_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="tblRespondent" EntitySet="tblRespondent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRespondent_lutCheckInLevel" Association="Self.FK_tblRespondent_lutCheckInLevel">
+      <End Role="lutCheckInLevel" EntitySet="lutCheckInLevel" />
+      <End Role="tblRespondent" EntitySet="tblRespondent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRespondent_lutStatus" Association="Self.FK_tblRespondent_lutStatus">
+      <End Role="lutStatus" EntitySet="lutStatus" />
+      <End Role="tblRespondent" EntitySet="tblRespondent" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,249 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor Payroll System</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>Call Centre Tracker</title>
+
+    <!-- Fontfaces CSS-->
+    <link href="~/Content/css/font-face.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="~/Content/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="~/Content/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/Content/css/theme.css" rel="stylesheet" media="all">
+
+
+    <style>
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 80px; /* Increased top padding */
+            border-right: 2px solid #ddd;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            padding: 10px;
+        }
+
+            .nav-link i {
+                margin-right: 8px;
+            }
+
+        main {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="header-desktop3 d-none d-lg-block">
+            <div class="section__content section__content--p35">
+                <div class="header3-wrap">
+                    <div class="header__logo">
+                        <a href="#">
+                            <img src="~/Content/images/icon/IpsosSDR.png" alt="SDR" />
+                            @*<p>Welcome to SDR Callcenter FollowUps</p>*@
+                        </a>
+                    </div>
+
+                    <div class="header__tool">
+
+
+                        <div class="account-wrap">
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <div class="image">
+                                    <img src="~/Content/images/icon/UserImage.png" alt="user name" />
+                                </div>
+                                <div class="content">
+                                    <a class="js-acc-btn" href="#">
+                                        welcome
+                                        @if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                                        {
+                                            <b>@HttpContext.Current.User.Identity.Name</b>
+                                        }
+                                    </a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                    <div class="info clearfix">
+                                        <div class="image">
+                                            <a href="#">
+                                                <img src="~/Content/images/icon/UserImage.png" alt="user name" />
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="name">
+                                                <a href="#">
+                                                    @if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                                                    {
+                                                        <b>@HttpContext.Current.User.Identity.Name</b>
+                                                    }
+                                                </a>
+                                            </h5>
+                                            <span class="email">
+                                                @if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                                                {
+                                                    <b>@HttpContext.Current.User.Identity.Name</b>
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a href="@Url.Action("UpdatePassword", "User")" class="btn btn-success">
+                                            <i class="fas fa-edit"></i> Update Password
+                                        </a>
+                                        <a href="@Url.Action("Login", "Home")" class="btn btn-danger">
+                                            <i class="fas fa-sign-out-alt"></i> Logout
+                                        </a>
+                                    }
+
+                                    <div>
+                                        <input type="hidden" id="UserFullName" class="iHidden" name="UserFullName" value='@ViewBag.CurrentUserName' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky mt-5">
+
+                    <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded shadow-sm bg-white hover-effect"
+                       href="@Url.Action("LandingPage", "Home")"
+                       style="font-weight: 500; color: #333; transition: all 0.3s;">
+                        <i class="fa-solid fa-house fa-lg text-primary"></i>
+                        <span>Navigate to Dashboard</span>
+                    </a>
+                    <style>
+                        .hover-effect:hover {
+                            background-color: #f1f1f1;
+                            transform: translateY(-1px);
+                            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                            text-decoration: none;
+                        }
+                    </style>
+
+                    @if (ViewBag.Role != null && ViewBag.Role.ToString() == "Supervisor Role")
+                    {
+                        <ul class="nav flex-column mt-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "User")">
+                                    <i class="fa-solid fa-users"></i> Manage Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Supervisor")">
+                                    <i class="fa-solid fa-chart-pie"></i> Manage Supervisors
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Project")">
+                                    <i class="fa-solid fa-chart-bar"></i> Manage Projects
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "FCProjectRequest")">
+                                    <i class="fa-solid fa-chart-line"></i> Projects Reports
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (ViewBag.Role != null && ViewBag.Role.ToString() == "Field Coordinator")
+                    {
+                        <ul class="nav flex-column mt-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "FCProjectRequest")">
+                                    <i class="fa-solid fa-chart-pie"></i> Manage your Projects
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                @RenderBody()  <!-- This will render the content of the current view -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    @RenderSection("Scripts", required: false)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>
+<!-- Jquery JS-->
+<script src="~/Content/vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="~/Content/vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="~/Content/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="~/Content/vendor/slick/slick.min.js"></script>
+<script src="~/Content/vendor/wow/wow.min.js"></script>
+<script src="~/Content/vendor/animsition/animsition.min.js"></script>
+<script src="~/Content/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="~/Content/vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="~/Content/vendor/counter-up/jquery.counterup.min.js"></script>
+<script src="~/Content/vendor/circle-progress/circle-progress.min.js"></script>
+<script src="~/Content/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/Content/vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="~/Content/vendor/select2/select2.min.js"></script>
+
+<!-- Main JS-->
+<script src="~/Scripts/js/main.js"></script>
+
+
+
+
+
+<div>
+    <input type="hidden" id="UserId" class="iHidden" name="UserId" value='@ViewBag.CurrentUserId' />
+    <input type="hidden" id="UserFullName" class="iHidden" name="UserFullName" value='@ViewBag.CurrentUserName' />
+    <input type="hidden" id="UserEmailAddress" class="iHidden" name="UserEmailAddress" value='@ViewBag.CurrentUserEmail' />
+</div>

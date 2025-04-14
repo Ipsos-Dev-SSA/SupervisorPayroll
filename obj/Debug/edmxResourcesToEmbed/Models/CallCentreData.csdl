@@ -1,0 +1,861 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CallCentreTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="aspnet_Applications">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+    </Key>
+    <Property Name="ApplicationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoweredApplicationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__Appli__3A81B327" FromRole="aspnet_Applications" ToRole="aspnet_Membership" />
+    <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pa__Appli__6C190EBB" FromRole="aspnet_Applications" ToRole="aspnet_Paths" />
+    <NavigationProperty Name="aspnet_Roles" Relationship="Self.FK__aspnet_Ro__Appli__59063A47" FromRole="aspnet_Applications" ToRole="aspnet_Roles" />
+    <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Us__Appli__2A4B4B5E" FromRole="aspnet_Applications" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+    <Property Name="PasswordSalt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobilePIN" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LoweredEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordQuestion" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordAnswer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+    <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Me__Appli__3A81B327" FromRole="aspnet_Membership" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Me__UserI__3B75D760" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Paths">
+    <Key>
+      <PropertyRef Name="PathId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="PathId" Type="Guid" Nullable="false" />
+    <Property Name="Path" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoweredPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Pa__Appli__6C190EBB" FromRole="aspnet_Paths" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_PersonalizationAllUsers" Relationship="Self.FK__aspnet_Pe__PathI__71D1E811" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationAllUsers" />
+    <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__PathI__75A278F5" FromRole="aspnet_Paths" ToRole="aspnet_PersonalizationPerUser" />
+  </EntityType>
+  <EntityType Name="aspnet_PersonalizationAllUsers">
+    <Key>
+      <PropertyRef Name="PathId" />
+    </Key>
+    <Property Name="PathId" Type="Guid" Nullable="false" />
+    <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__71D1E811" FromRole="aspnet_PersonalizationAllUsers" ToRole="aspnet_Paths" />
+  </EntityType>
+  <EntityType Name="aspnet_PersonalizationPerUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="PathId" Type="Guid" />
+    <Property Name="UserId" Type="Guid" />
+    <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__75A278F5" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
+    <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pe__UserI__76969D2E" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Profile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="PropertyNames" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PropertyValuesString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PropertyValuesBinary" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Users" Relationship="Self.FK__aspnet_Pr__UserI__4F7CD00D" FromRole="aspnet_Profile" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoweredRoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Ro__Appli__59063A47" FromRole="aspnet_Roles" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_Users" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Roles" ToRole="aspnet_Users" />
+  </EntityType>
+  <EntityType Name="aspnet_SchemaVersions">
+    <Key>
+      <PropertyRef Name="Feature" />
+      <PropertyRef Name="CompatibleSchemaVersion" />
+    </Key>
+    <Property Name="Feature" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CompatibleSchemaVersion" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsCurrentVersion" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aspnet_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoweredUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+    <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="aspnet_Applications" Relationship="Self.FK__aspnet_Us__Appli__2A4B4B5E" FromRole="aspnet_Users" ToRole="aspnet_Applications" />
+    <NavigationProperty Name="aspnet_Membership" Relationship="Self.FK__aspnet_Me__UserI__3B75D760" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
+    <NavigationProperty Name="aspnet_PersonalizationPerUser" Relationship="Self.FK__aspnet_Pe__UserI__76969D2E" FromRole="aspnet_Users" ToRole="aspnet_PersonalizationPerUser" />
+    <NavigationProperty Name="aspnet_Profile" Relationship="Self.FK__aspnet_Pr__UserI__4F7CD00D" FromRole="aspnet_Users" ToRole="aspnet_Profile" />
+    <NavigationProperty Name="aspnet_Roles" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Users" ToRole="aspnet_Roles" />
+    <Property Name="CountryID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="aspnet_WebEvent_Events">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="EventTimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EventTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EventType" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EventSequence" Type="Decimal" Precision="19" Scale="0" Nullable="false" />
+    <Property Name="EventOccurrence" Type="Decimal" Precision="19" Scale="0" Nullable="false" />
+    <Property Name="EventCode" Type="Int32" Nullable="false" />
+    <Property Name="EventDetailCode" Type="Int32" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="ApplicationPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ApplicationVirtualPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="MachineName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RequestUrl" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="ExceptionType" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="lutCheckInLevel">
+    <Key>
+      <PropertyRef Name="CheckInLevelID" />
+    </Key>
+    <Property Name="CheckInLevelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CheckInLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="lutCheckInLevel1" Relationship="Self.FK_lutCheckInLevel_lutCheckInLevel" FromRole="lutCheckInLevel" ToRole="lutCheckInLevel1" />
+    <NavigationProperty Name="lutCheckInLevel2" Relationship="Self.FK_lutCheckInLevel_lutCheckInLevel" FromRole="lutCheckInLevel1" ToRole="lutCheckInLevel" />
+    <NavigationProperty Name="tblRespondents" Relationship="CallCentreTrackerModel.FK_tblRespondent_lutCheckInLevel" FromRole="lutCheckInLevel" ToRole="tblRespondent" />
+  </EntityType>
+  <EntityType Name="LutPhase">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PhaseStatusId" Type="Int32" Nullable="false" />
+    <Property Name="PhaseOutcomeId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="LutPhaseOutcome" Relationship="Self.FK__LutPhase__PhaseO__46136164" FromRole="LutPhase" ToRole="LutPhaseOutcome" />
+    <NavigationProperty Name="LutPhaseStatu" Relationship="Self.FK__LutPhase__PhaseS__451F3D2B" FromRole="LutPhase" ToRole="LutPhaseStatus" />
+  </EntityType>
+  <EntityType Name="LutPhaseOutcome">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhaseStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LutPhases" Relationship="Self.FK__LutPhase__PhaseO__46136164" FromRole="LutPhaseOutcome" ToRole="LutPhase" />
+    <NavigationProperty Name="LutPhaseStatu" Relationship="Self.FK__LutPhaseO__Phase__36D11DD4" FromRole="LutPhaseOutcome" ToRole="LutPhaseStatus" />
+  </EntityType>
+  <EntityType Name="LutPhaseStatu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="LutPhases" Relationship="Self.FK__LutPhase__PhaseS__451F3D2B" FromRole="LutPhaseStatus" ToRole="LutPhase" />
+    <NavigationProperty Name="LutPhaseOutcomes" Relationship="Self.FK__LutPhaseO__Phase__36D11DD4" FromRole="LutPhaseStatus" ToRole="LutPhaseOutcome" />
+  </EntityType>
+  <EntityType Name="LutScreeningPhase">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EligibilityCategory" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EligibilityDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EligibilityCode" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lutStatu">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblAgentActivities" Relationship="CallCentreTrackerModel.FK_tblAgentActivity_lutStatus" FromRole="lutStatu" ToRole="tblAgentActivity" />
+    <NavigationProperty Name="tblRespondents" Relationship="CallCentreTrackerModel.FK_tblRespondent_lutStatus" FromRole="lutStatu" ToRole="tblRespondent" />
+  </EntityType>
+  <EntityType Name="tblAgent">
+    <Key>
+      <PropertyRef Name="AgentID" />
+    </Key>
+    <Property Name="AgentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblAgentActivities" Relationship="CallCentreTrackerModel.FK_tblAgentActivity_tblAgents" FromRole="tblAgent" ToRole="tblAgentActivity" />
+    <Property Name="CountryID" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="CallCentreTrackerModel.FK_tblAgents_Country" FromRole="tblAgent" ToRole="Country" />
+  </EntityType>
+  <Association Name="FK__aspnet_Me__Appli__3A81B327">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Membership">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pa__Appli__6C190EBB">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Paths">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Ro__Appli__59063A47">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Roles">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Us__Appli__2A4B4B5E">
+    <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Applications">
+        <PropertyRef Name="ApplicationId" />
+      </Principal>
+      <Dependent Role="aspnet_Users">
+        <PropertyRef Name="ApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Me__UserI__3B75D760">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_Membership">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__PathI__71D1E811">
+    <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="1" />
+    <End Role="aspnet_PersonalizationAllUsers" Type="Self.aspnet_PersonalizationAllUsers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Paths">
+        <PropertyRef Name="PathId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationAllUsers">
+        <PropertyRef Name="PathId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__PathI__75A278F5">
+    <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
+    <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Paths">
+        <PropertyRef Name="PathId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationPerUser">
+        <PropertyRef Name="PathId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pe__UserI__76969D2E">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
+    <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_PersonalizationPerUser">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__aspnet_Pr__UserI__4F7CD00D">
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+    <End Role="aspnet_Profile" Type="Self.aspnet_Profile" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="aspnet_Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="aspnet_Profile">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_lutCheckInLevel_lutCheckInLevel">
+    <End Role="lutCheckInLevel" Type="Self.lutCheckInLevel" Multiplicity="1" />
+    <End Role="lutCheckInLevel1" Type="Self.lutCheckInLevel" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="lutCheckInLevel">
+        <PropertyRef Name="CheckInLevelID" />
+      </Principal>
+      <Dependent Role="lutCheckInLevel1">
+        <PropertyRef Name="CheckInLevelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LutPhase__PhaseO__46136164">
+    <End Role="LutPhaseOutcome" Type="Self.LutPhaseOutcome" Multiplicity="1" />
+    <End Role="LutPhase" Type="Self.LutPhase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LutPhaseOutcome">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LutPhase">
+        <PropertyRef Name="PhaseOutcomeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LutPhase__PhaseS__451F3D2B">
+    <End Role="LutPhaseStatus" Type="Self.LutPhaseStatu" Multiplicity="1" />
+    <End Role="LutPhase" Type="Self.LutPhase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LutPhaseStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LutPhase">
+        <PropertyRef Name="PhaseStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LutPhaseO__Phase__36D11DD4">
+    <End Role="LutPhaseStatus" Type="Self.LutPhaseStatu" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LutPhaseOutcome" Type="Self.LutPhaseOutcome" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LutPhaseStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LutPhaseOutcome">
+        <PropertyRef Name="PhaseStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="aspnet_UsersInRoles">
+    <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
+    <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="CallCentreTrackerEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="aspnet_Applications" EntityType="Self.aspnet_Applications" />
+    <EntitySet Name="aspnet_Membership" EntityType="Self.aspnet_Membership" />
+    <EntitySet Name="aspnet_Paths" EntityType="Self.aspnet_Paths" />
+    <EntitySet Name="aspnet_PersonalizationAllUsers" EntityType="Self.aspnet_PersonalizationAllUsers" />
+    <EntitySet Name="aspnet_PersonalizationPerUser" EntityType="Self.aspnet_PersonalizationPerUser" />
+    <EntitySet Name="aspnet_Profile" EntityType="Self.aspnet_Profile" />
+    <EntitySet Name="aspnet_Roles" EntityType="Self.aspnet_Roles" />
+    <EntitySet Name="aspnet_SchemaVersions" EntityType="Self.aspnet_SchemaVersions" />
+    <EntitySet Name="aspnet_Users" EntityType="Self.aspnet_Users" />
+    <EntitySet Name="aspnet_WebEvent_Events" EntityType="Self.aspnet_WebEvent_Events" />
+    <EntitySet Name="lutCheckInLevels" EntityType="Self.lutCheckInLevel" />
+    <EntitySet Name="LutPhases" EntityType="Self.LutPhase" />
+    <EntitySet Name="LutPhaseOutcomes" EntityType="Self.LutPhaseOutcome" />
+    <EntitySet Name="LutPhaseStatus" EntityType="Self.LutPhaseStatu" />
+    <EntitySet Name="LutScreeningPhases" EntityType="Self.LutScreeningPhase" />
+    <EntitySet Name="lutStatus" EntityType="Self.lutStatu" />
+    <EntitySet Name="tblAgents" EntityType="Self.tblAgent" />
+    <AssociationSet Name="FK__aspnet_Me__Appli__3A81B327" Association="Self.FK__aspnet_Me__Appli__3A81B327">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pa__Appli__6C190EBB" Association="Self.FK__aspnet_Pa__Appli__6C190EBB">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Ro__Appli__59063A47" Association="Self.FK__aspnet_Ro__Appli__59063A47">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Us__Appli__2A4B4B5E" Association="Self.FK__aspnet_Us__Appli__2A4B4B5E">
+      <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Me__UserI__3B75D760" Association="Self.FK__aspnet_Me__UserI__3B75D760">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__PathI__71D1E811" Association="Self.FK__aspnet_Pe__PathI__71D1E811">
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+      <End Role="aspnet_PersonalizationAllUsers" EntitySet="aspnet_PersonalizationAllUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__PathI__75A278F5" Association="Self.FK__aspnet_Pe__PathI__75A278F5">
+      <End Role="aspnet_Paths" EntitySet="aspnet_Paths" />
+      <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pe__UserI__76969D2E" Association="Self.FK__aspnet_Pe__UserI__76969D2E">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_PersonalizationPerUser" EntitySet="aspnet_PersonalizationPerUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__aspnet_Pr__UserI__4F7CD00D" Association="Self.FK__aspnet_Pr__UserI__4F7CD00D">
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+      <End Role="aspnet_Profile" EntitySet="aspnet_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_lutCheckInLevel_lutCheckInLevel" Association="Self.FK_lutCheckInLevel_lutCheckInLevel">
+      <End Role="lutCheckInLevel" EntitySet="lutCheckInLevels" />
+      <End Role="lutCheckInLevel1" EntitySet="lutCheckInLevels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LutPhase__PhaseO__46136164" Association="Self.FK__LutPhase__PhaseO__46136164">
+      <End Role="LutPhaseOutcome" EntitySet="LutPhaseOutcomes" />
+      <End Role="LutPhase" EntitySet="LutPhases" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LutPhase__PhaseS__451F3D2B" Association="Self.FK__LutPhase__PhaseS__451F3D2B">
+      <End Role="LutPhaseStatus" EntitySet="LutPhaseStatus" />
+      <End Role="LutPhase" EntitySet="LutPhases" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LutPhaseO__Phase__36D11DD4" Association="Self.FK__LutPhaseO__Phase__36D11DD4">
+      <End Role="LutPhaseStatus" EntitySet="LutPhaseStatus" />
+      <End Role="LutPhaseOutcome" EntitySet="LutPhaseOutcomes" />
+    </AssociationSet>
+    <AssociationSet Name="aspnet_UsersInRoles" Association="Self.aspnet_UsersInRoles">
+      <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+      <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+    </AssociationSet>
+    <EntitySet Name="vw_aspnet_Roles" EntityType="CallCentreTrackerModel.vw_aspnet_Roles" />
+    <EntitySet Name="vw_aspnet_Users" EntityType="CallCentreTrackerModel.vw_aspnet_Users" />
+    <EntitySet Name="vw_aspnet_UsersInRoles" EntityType="CallCentreTrackerModel.vw_aspnet_UsersInRoles" />
+    <EntitySet Name="InterviewOutcomes" EntityType="CallCentreTrackerModel.InterviewOutcome" />
+    <EntitySet Name="PhaseOutcomes" EntityType="CallCentreTrackerModel.PhaseOutcome" />
+    <EntitySet Name="tblAgentActivities" EntityType="CallCentreTrackerModel.tblAgentActivity" />
+    <AssociationSet Name="FK_tblAgentActivity_lutStatus" Association="CallCentreTrackerModel.FK_tblAgentActivity_lutStatus">
+      <End Role="lutStatu" EntitySet="lutStatus" />
+      <End Role="tblAgentActivity" EntitySet="tblAgentActivities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAgentActivity_tblAgents" Association="CallCentreTrackerModel.FK_tblAgentActivity_tblAgents">
+      <End Role="tblAgent" EntitySet="tblAgents" />
+      <End Role="tblAgentActivity" EntitySet="tblAgentActivities" />
+    </AssociationSet>
+    <EntitySet Name="Countries" EntityType="CallCentreTrackerModel.Country" />
+    <EntitySet Name="tblRespondents" EntityType="CallCentreTrackerModel.tblRespondent" />
+    <AssociationSet Name="FK_tblAgents_Country" Association="CallCentreTrackerModel.FK_tblAgents_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="tblAgent" EntitySet="tblAgents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRespondent_Country" Association="CallCentreTrackerModel.FK_tblRespondent_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="tblRespondent" EntitySet="tblRespondents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRespondent_lutCheckInLevel" Association="CallCentreTrackerModel.FK_tblRespondent_lutCheckInLevel">
+      <End Role="lutCheckInLevel" EntitySet="lutCheckInLevels" />
+      <End Role="tblRespondent" EntitySet="tblRespondents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRespondent_lutStatus" Association="CallCentreTrackerModel.FK_tblRespondent_lutStatus">
+      <End Role="lutStatu" EntitySet="lutStatus" />
+      <End Role="tblRespondent" EntitySet="tblRespondents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAgentActivity_tblRespondent" Association="CallCentreTrackerModel.FK_tblAgentActivity_tblRespondent">
+      <End Role="tblRespondent" EntitySet="tblRespondents" />
+      <End Role="tblAgentActivity" EntitySet="tblAgentActivities" />
+    </AssociationSet>
+    <EntitySet Name="tblStagings" EntityType="CallCentreTrackerModel.tblStaging" />
+    <EntitySet Name="FieldCoordinators" EntityType="CallCentreTrackerModel.FieldCoordinator" />
+    <EntitySet Name="PaymentDetails" EntityType="CallCentreTrackerModel.PaymentDetail" />
+    <EntitySet Name="Projects" EntityType="CallCentreTrackerModel.Project" />
+    <EntitySet Name="Supervisors" EntityType="CallCentreTrackerModel.Supervisor" />
+    <EntitySet Name="FCProjectRequests" EntityType="CallCentreTrackerModel.FCProjectRequest" />
+    <AssociationSet Name="FK__FCProject__Proje__32CB82C6" Association="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PaymentDe__Reque__38845C1C" Association="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C">
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Supervisor" Association="CallCentreTrackerModel.FK_Employee_Supervisor">
+      <End Role="Supervisor" EntitySet="Supervisors" />
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="vw_aspnet_Roles">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="LoweredRoleName" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_Users">
+    <Key>
+      <PropertyRef Name="ApplicationId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="LoweredUserName" />
+      <PropertyRef Name="IsAnonymous" />
+      <PropertyRef Name="LastActivityDate" />
+    </Key>
+    <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+    <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_aspnet_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InterviewOutcome">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCode" Type="Int32" />
+    <Property Name="GroupID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PhaseOutcome">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PhaseStatusId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblAgentActivity">
+    <Key>
+      <PropertyRef Name="AgentActiviryID" />
+    </Key>
+    <Property Name="AgentActiviryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RespondentID" Type="Int32" />
+    <Property Name="AgentID" Type="Int32" />
+    <Property Name="DateAdded" Type="DateTime" Precision="3" />
+    <Property Name="StatusID" Type="Int32" />
+    <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Contacts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phase" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ScreeningID" Type="Int32" />
+    <Property Name="InterviewID" Type="Int32" />
+    <Property Name="Resp_Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="lutStatu" Relationship="CallCentreTrackerModel.FK_tblAgentActivity_lutStatus" FromRole="tblAgentActivity" ToRole="lutStatu" />
+    <NavigationProperty Name="tblAgent" Relationship="CallCentreTrackerModel.FK_tblAgentActivity_tblAgents" FromRole="tblAgentActivity" ToRole="tblAgent" />
+    <NavigationProperty Name="tblRespondent" Relationship="CallCentreTrackerModel.FK_tblAgentActivity_tblRespondent" FromRole="tblAgentActivity" ToRole="tblRespondent" />
+  </EntityType>
+  <Association Name="FK_tblAgentActivity_lutStatus">
+    <End Type="CallCentreTrackerModel.lutStatu" Role="lutStatu" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.tblAgentActivity" Role="tblAgentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lutStatu">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="tblAgentActivity">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAgentActivity_tblAgents">
+    <End Type="CallCentreTrackerModel.tblAgent" Role="tblAgent" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.tblAgentActivity" Role="tblAgentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAgent">
+        <PropertyRef Name="AgentID" />
+      </Principal>
+      <Dependent Role="tblAgentActivity">
+        <PropertyRef Name="AgentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblAgents" Relationship="CallCentreTrackerModel.FK_tblAgents_Country" FromRole="Country" ToRole="tblAgent" />
+    <NavigationProperty Name="tblRespondents" Relationship="CallCentreTrackerModel.FK_tblRespondent_Country" FromRole="Country" ToRole="tblRespondent" />
+  </EntityType>
+  <EntityType Name="tblRespondent">
+    <Key>
+      <PropertyRef Name="RespondentID" />
+    </Key>
+    <Property Name="RespondentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ResonseId" Type="Int32" />
+    <Property Name="InstanceID" Type="Int32" />
+    <Property Name="RESPID" Type="Int32" />
+    <Property Name="Q1" Type="DateTime" Precision="3" />
+    <Property Name="Q2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Q3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Q202_EDD" Type="DateTime" Precision="3" />
+    <Property Name="Resp_Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Resp_FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Resp_Oth" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Q607_C_1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Q608a_q608_C_1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Q609a_q609_C_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Q610a_q610_C_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Q611a_q611_C_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Q612_Phone_C_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TimeZone" Type="Time" Precision="7" />
+    <Property Name="Q610_" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CheckIn1" Type="Boolean" />
+    <Property Name="CheckIn1Date" Type="DateTime" Precision="3" />
+    <Property Name="CheckIn2" Type="Boolean" />
+    <Property Name="CheckIn2Date" Type="DateTime" Precision="3" />
+    <Property Name="CheckIn3" Type="Boolean" />
+    <Property Name="CheckIn3Date" Type="DateTime" Precision="3" />
+    <Property Name="CheckIn4" Type="Boolean" />
+    <Property Name="CheckIn4Date" Type="DateTime" Precision="3" />
+    <Property Name="EDD_Latest" Type="DateTime" Precision="3" />
+    <Property Name="CheckInLevelID" Type="Int32" />
+    <Property Name="CheckInLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CheckInDate" Type="DateTime" Precision="3" />
+    <Property Name="StatusID" Type="Int32" />
+    <Property Name="DateAdded" Type="DateTime" Precision="3" />
+    <Property Name="AddedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CheckIn1StatusId" Type="Int32" />
+    <Property Name="CheckIn2StatusId" Type="Int32" />
+    <Property Name="CheckIn3StatusId" Type="Int32" />
+    <Property Name="CheckIn4StatusId" Type="Int32" />
+    <Property Name="CheckIn5StatusId" Type="Int32" />
+    <Property Name="PhysicalAttempt1" Type="Boolean" />
+    <Property Name="PhysicalAttempt2" Type="Boolean" />
+    <Property Name="PhysicalAttempt3" Type="Boolean" />
+    <Property Name="CheckIn5" Type="Boolean" />
+    <Property Name="CheckIn5Date" Type="DateTime" Precision="3" />
+    <Property Name="PhysicalAttempt1Date" Type="DateTime" Precision="3" />
+    <Property Name="PhysicalAttempt2Date" Type="DateTime" Precision="3" />
+    <Property Name="PhysicalAttempt3Date" Type="DateTime" Precision="3" />
+    <Property Name="VisitLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ScreeningID" Type="Int32" />
+    <Property Name="InterviewID" Type="Int32" />
+    <Property Name="ScreeningDate" Type="DateTime" Precision="3" />
+    <Property Name="InterviewDate" Type="DateTime" Precision="3" />
+    <Property Name="PhysicalAttemptStatusId1" Type="Int32" />
+    <Property Name="PhysicalAttemptStatusId2" Type="Int32" />
+    <Property Name="PhysicalAttemptStatusId3" Type="Int32" />
+    <Property Name="ScreeningLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InterviewerLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhaseStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhaseOutcome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ScreeningCheckIn" Type="Boolean" />
+    <Property Name="InterviewCheckIn" Type="Boolean" />
+    <Property Name="interviewStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InterviewOutcome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CountryID" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="CallCentreTrackerModel.FK_tblRespondent_Country" FromRole="tblRespondent" ToRole="Country" />
+    <NavigationProperty Name="lutCheckInLevel" Relationship="CallCentreTrackerModel.FK_tblRespondent_lutCheckInLevel" FromRole="tblRespondent" ToRole="lutCheckInLevel" />
+    <NavigationProperty Name="lutStatu" Relationship="CallCentreTrackerModel.FK_tblRespondent_lutStatus" FromRole="tblRespondent" ToRole="lutStatu" />
+    <NavigationProperty Name="tblAgentActivities" Relationship="CallCentreTrackerModel.FK_tblAgentActivity_tblRespondent" FromRole="tblRespondent" ToRole="tblAgentActivity" />
+  </EntityType>
+  <Association Name="FK_tblAgents_Country">
+    <End Type="CallCentreTrackerModel.Country" Role="Country" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.tblAgent" Role="tblAgent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="tblAgent">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRespondent_Country">
+    <End Type="CallCentreTrackerModel.Country" Role="Country" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.tblRespondent" Role="tblRespondent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="tblRespondent">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRespondent_lutCheckInLevel">
+    <End Type="CallCentreTrackerModel.lutCheckInLevel" Role="lutCheckInLevel" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.tblRespondent" Role="tblRespondent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lutCheckInLevel">
+        <PropertyRef Name="CheckInLevelID" />
+      </Principal>
+      <Dependent Role="tblRespondent">
+        <PropertyRef Name="CheckInLevelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRespondent_lutStatus">
+    <End Type="CallCentreTrackerModel.lutStatu" Role="lutStatu" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.tblRespondent" Role="tblRespondent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="lutStatu">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="tblRespondent">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAgentActivity_tblRespondent">
+    <End Type="CallCentreTrackerModel.tblRespondent" Role="tblRespondent" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CallCentreTrackerModel.tblAgentActivity" Role="tblAgentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRespondent">
+        <PropertyRef Name="RespondentID" />
+      </Principal>
+      <Dependent Role="tblAgentActivity">
+        <PropertyRef Name="RespondentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblStaging">
+    <Key>
+      <PropertyRef Name="St_Id" />
+    </Key>
+    <Property Name="St_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CellDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="technicalid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="cellid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="celltarget" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="cellpreference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CountryID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="FieldCoordinator">
+    <Key>
+      <PropertyRef Name="FieldCoordinatorID" />
+    </Key>
+    <Property Name="FieldCoordinatorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentDetail">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestID" Type="Int32" />
+    <Property Name="PaymentAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="FCProjectRequest" Relationship="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C" FromRole="PaymentDetail" ToRole="FCProjectRequest" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ProjectNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PayRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="SupervisionFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="FCProjectRequests" Relationship="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" FromRole="Project" ToRole="FCProjectRequest" />
+  </EntityType>
+  <EntityType Name="Supervisor">
+    <Key>
+      <PropertyRef Name="SupervisorID" />
+    </Key>
+    <Property Name="SupervisorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Region" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="PCNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FCProjectRequests" Relationship="CallCentreTrackerModel.FK_Employee_Supervisor" FromRole="Supervisor" ToRole="FCProjectRequest" />
+  </EntityType>
+  <EntityType Name="FCProjectRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupervisorID" Type="Int32" />
+    <Property Name="ProjectID" Type="Int32" />
+    <Property Name="FieldCoordinatorID" Type="Int32" />
+    <Property Name="NumberOfInterviews" Type="Int32" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="DateRequested" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AddedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Project" Relationship="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" FromRole="FCProjectRequest" ToRole="Project" />
+    <NavigationProperty Name="PaymentDetails" Relationship="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C" FromRole="FCProjectRequest" ToRole="PaymentDetail" />
+    <NavigationProperty Name="Supervisor" Relationship="CallCentreTrackerModel.FK_Employee_Supervisor" FromRole="FCProjectRequest" ToRole="Supervisor" />
+  </EntityType>
+  <Association Name="FK__FCProject__Proje__32CB82C6">
+    <End Type="CallCentreTrackerModel.Project" Role="Project" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.FCProjectRequest" Role="FCProjectRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="FCProjectRequest">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PaymentDe__Reque__38845C1C">
+    <End Type="CallCentreTrackerModel.FCProjectRequest" Role="FCProjectRequest" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FCProjectRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Supervisor">
+    <End Type="CallCentreTrackerModel.Supervisor" Role="Supervisor" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.FCProjectRequest" Role="FCProjectRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supervisor">
+        <PropertyRef Name="SupervisorID" />
+      </Principal>
+      <Dependent Role="FCProjectRequest">
+        <PropertyRef Name="SupervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

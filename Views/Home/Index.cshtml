@@ -1,0 +1,356 @@
+﻿@model CallCentreFollowUps.Models.RespModel
+
+@{
+    ViewBag.Title = "Index";
+
+}
+@{
+    Layout = "~/Views/Shared/_LayoutPayroll.cshtml"; <!-- Reference the layout file here -->
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+    <link href="~/Content/datatables.min.css" />
+    <script src="~/Scripts/datatables.min.js"></script>
+    <link href="~/Content/Site.css" />
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var table = $('#ResponsentTable').DataTable({
+                'responsive': true
+            });
+
+        });
+
+        $(function () {
+            $("#ResponsentTable .details").click(function () {
+                var RespondentID = $(this).closest("tr").find("td").eq(0).html();
+                $.ajax({
+                    type: "POST",
+                    url: "/CallCentreTracker/Home/ViewRespondent",
+                    data: '{RespondentID: "' + RespondentID + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (response) {
+                        $("#partialModal").find(".modal-body").html(response);
+                        $("#partialModal").modal('show');
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+
+
+    <div id="partialModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Customer Details Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.RespondentList)
+
+        if (ViewBag.role == "SupervisorRole")
+        {
+            <div class="d-inline-block">
+                <a href="@Url.Action("Index", "Admin")" class="btn btn-primary me-3">Upload Excel</a>
+                <button id="exportExcel" class="btn btn-success">Export to Excel</button>
+                <a href="@Url.Action("IndexStatistics", "Home")" class="btn btn-primary">Go to Statistics</a>
+
+            </div>
+
+            <br />
+            <br />
+
+
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="filterAgent">Filter by Agent:</label>
+                    <select id="filterAgent" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var agent in Model.RespondentList.Select(r => r.Name).Distinct())
+                        {
+                            <option value="@agent">@agent</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="filterStatus">Filter by Status:</label>
+                    <select id="filterStatus" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var status in Model.RespondentList.Select(r => r.Status).Distinct())
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </select>
+                </div>
+
+
+            </div>
+
+            <div class="row mt-3">
+                <div class="table-responsive m-b-40">
+                    <table id="ResponsentTable" class="table" cellspacing="0" width="100%">
+
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Interview ID</th>
+                                <th>Cell Description</th>
+                                <th>Technical ID</th>
+                                <th>Agent</th>
+                                <th>Status</th>
+                                <th>CheckIn Level</th>
+                                <th>Visit Level</th>
+                                <th>CheckIn Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.RespondentList.Count; i++)
+                            {
+                                string classname = "";
+                                if (Model.RespondentList[i].CheckInDate == DateTime.Now.ToString("dd-MM-yyyy"))
+                                {
+                                    classname = "table-info";
+                                }
+                                <tr class="@classname">
+                                    <td>
+                                        <input type="checkbox" name="respondentIDs" value="@Model.RespondentList[i].RespondentID" class="checkbox" />
+                                    </td>
+                                    <td>@Model.RespondentList[i].Resp_Surname</td>
+                                    <td>@Model.RespondentList[i].Resp_FirstName</td>
+                                    <td>@Model.RespondentList[i].PhoneNumber</td>
+                                    <td>@Model.RespondentList[i].Name</td>
+                                    <td>@Model.RespondentList[i].Status</td>
+                                    <td>@Model.RespondentList[i].CheckInLevel</td>
+                                    <td>@Model.RespondentList[i].PhysicalCheckInLevel</td>
+                                    <td>@Model.RespondentList[i].DateAdded</td>
+
+                                    <td>@Html.ActionLink("View", "ViewRespondent", "Home", new { respondentID = Model.RespondentList[i].RespondentID }, null)</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="header">
+                <strong>Assign Agent</strong>
+            </div>
+            <div class="form-group">
+
+                <select name="agentId" id="agentId" class="form-control" style="width:350px;">
+                    <option value="">Select Agent</option>
+                    @foreach (var item in ViewBag.agents)
+                    {
+                        <option value="@item.AgentID">@item.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="header">
+                <button type="submit" class="btn btn-primary btn-sm" style="width:100px;">
+                    <i class="fa fa-dot-circle-o"></i> Assign
+                </button>
+                <p class="@ViewBag.alert">@ViewBag.message</p>
+
+            </div>
+            <br />
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <canvas id="statusPieChart"></canvas>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                var ctx = document.getElementById("statusPieChart").getContext("2d");
+
+                var statusData = @Html.Raw(Json.Encode(ViewBag.StatusData));
+
+                var labels = statusData.map(item => item.Status);
+                var data = statusData.map(item => item.Count);
+
+                var backgroundColors = [
+                    "#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0", "#FF9800", "#8BC34A"
+                ];
+
+                new Chart(ctx, {
+                    type: "pie",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors
+                        }]
+                    }
+                });
+            });
+            </script>
+
+
+            <!-- Include Dependencies -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+            <script>
+        $(document).ready(function () {
+            // Destroy DataTable if already initialized
+            if ($.fn.DataTable.isDataTable("#ResponsentTable")) {
+                $('#ResponsentTable').DataTable().destroy();
+            }
+
+            // Initialize DataTable
+            var table = $('#ResponsentTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true
+            });
+
+            // Filter by Agent
+            $('#filterAgent').on('change', function () {
+                table.column(4).search(this.value).draw(); // Column index 4 -> "Agent"
+            });
+
+            // Filter by Status
+            $('#filterStatus').on('change', function () {
+                table.column(5).search(this.value).draw(); // Column index 5 -> "Status"
+            });
+
+            $("#exportExcel").click(function () {
+                // Get full data (disable pagination)
+                table.page.len(-1).draw();
+
+                // Clone table & remove last column (Action Links)
+                var tableClone = $("#ResponsentTable").clone();
+                tableClone.find("td:last-child, th:last-child").remove();
+
+                // Convert cloned table to Excel
+                var wb = XLSX.utils.table_to_book(tableClone[0], { sheet: "Respondents" });
+                XLSX.writeFile(wb, "Respondents.xlsx");
+
+                // Restore pagination
+                table.page.len(10).draw();
+
+                // Redirect to Home/Index after exporting
+                window.location.href = '@Url.Action("Index", "Home")';
+            });
+        });
+            </script>
+
+
+
+            <br />
+
+
+        }
+        else if (ViewBag.role == "AgentRole")
+        {
+            <div class="table-responsive m-b-40">
+                <table id="ResponsentTable" class="table" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+
+
+
+                            <th>Interview ID</th>
+                            <th>Cell Description</th>
+                            <th>Cell Id</th>
+                            <th>Cell Target</th>
+                            <th>Cell Preference</th>
+                            <th>Status</th>
+                            <th>Call Attempt</th>
+                            <th>Physical Visit</th>
+                            <th>Call Date</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @for (int i = 0; i < Model.RespondentList.Count; i++)
+                        {
+                            string classname = "";
+                            if (Model.RespondentList[i].CheckInDate == DateTime.Now.ToString("dd-MM-yyyy"))
+                            {
+                                classname = "table-info";
+                            }
+                            <tr class="@classname">
+
+                                <td>@Model.RespondentList[i].Resp_Surname</td>
+                                <td>@Model.RespondentList[i].Resp_FirstName</td>
+                                <td>@Model.RespondentList[i].PhoneNumber</td>
+                                <td>@Model.RespondentList[i].Q607_C_1</td>
+                                <td>@Model.RespondentList[i].Q608a_q608_C_1</td>
+                                <td>@Model.RespondentList[i].Status</td>
+
+                                <td>@Model.RespondentList[i].CheckInLevel</td>
+                                <td>@Model.RespondentList[i].VisitLevel</td>
+
+                                <td>@Model.RespondentList[i].CheckInDate</td>
+
+                                <td>@Html.ActionLink("View", "ViewRespondent", "Home", new { respondentID = Model.RespondentList[i].RespondentID, data_toggle = "modals", data_target = "#myModals" }, null)</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    }
+
+</body>
+</html>
