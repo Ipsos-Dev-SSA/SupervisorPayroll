@@ -15,7 +15,7 @@
     <!-- Two columns for Supervisor and Project -->
     <div class="form-row">
         <div class="form-group col-md-6">
-            @Html.LabelFor(model => model.SupervisorID,"Supervisor Name")
+            @Html.LabelFor(model => model.SupervisorID,"Supervisor Name(s)")
             @Html.DropDownListFor(model => model.SupervisorID, ViewBag.Supervisors as SelectList, "-- Select Supervisor --", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.SupervisorID)
         </div>
