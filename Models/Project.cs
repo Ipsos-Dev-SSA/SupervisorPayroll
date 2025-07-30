@@ -25,6 +25,7 @@ namespace CallCentreFollowUps.Models
         public string ProjectNumber { get; set; }
         public decimal PayRate { get; set; }
         public decimal SupervisionFee { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FCProjectRequest> FCProjectRequests { get; set; }

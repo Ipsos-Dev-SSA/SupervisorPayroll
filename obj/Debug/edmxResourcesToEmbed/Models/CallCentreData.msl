@@ -389,17 +389,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Projects">
-      <EntityTypeMapping TypeName="CallCentreTrackerModel.Project">
-        <MappingFragment StoreEntitySet="Project">
-          <ScalarProperty Name="SupervisionFee" ColumnName="SupervisionFee" />
-          <ScalarProperty Name="PayRate" ColumnName="PayRate" />
-          <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
-          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Supervisors">
       <EntityTypeMapping TypeName="CallCentreTrackerModel.Supervisor">
         <MappingFragment StoreEntitySet="Supervisor">
@@ -424,6 +413,18 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
           <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="CallCentreTrackerModel.Project">
+        <MappingFragment StoreEntitySet="Project">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SupervisionFee" ColumnName="SupervisionFee" />
+          <ScalarProperty Name="PayRate" ColumnName="PayRate" />
+          <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

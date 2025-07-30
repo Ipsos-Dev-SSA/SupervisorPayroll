@@ -16,39 +16,60 @@ namespace CallCentreFollowUps.Controllers
             _context = new CallCentreTrackerEntities1();
         }
 
+
+
         public ActionResult Index()
         {
-            string currentUser = User.Identity.Name; // Get the logged-in user's username or ID
+            string currentUser = User.Identity.Name;
 
             // Get the user's role
-            var userid = (from l in _context.aspnet_Users where l.UserName == currentUser select l.UserId).FirstOrDefault();
-            var userroleid = (from l in _context.vw_aspnet_UsersInRoles where l.UserId == userid select l.RoleId).FirstOrDefault();
-            var userrole = (from l in _context.aspnet_Roles where l.RoleId == userroleid select l.RoleName).FirstOrDefault();
+            var userId = _context.aspnet_Users
+                .Where(u => u.UserName == currentUser)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
 
-            // Initialize projectRequests list
+            var roleId = _context.vw_aspnet_UsersInRoles
+                .Where(r => r.UserId == userId)
+                .Select(r => r.RoleId)
+                .FirstOrDefault();
+
+            var roleName = _context.aspnet_Roles
+                .Where(r => r.RoleId == roleId)
+                .Select(r => r.RoleName)
+                .FirstOrDefault();
+
+            // Get active project IDs
+            var activeProjectIds = _context.Projects
+                .Where(p => p.IsActive)
+                .Select(p => p.ProjectID)
+                .ToList();
+
             List<FCProjectRequest> projectRequests;
 
-            // Check the user's role and retrieve project requests accordingly
-            if (userrole == "Supervisor Role") // Example: Admin sees all project requests
+            if (roleName == "Supervisor Role")
             {
-                projectRequests = _context.FCProjectRequests.ToList();
-            }
-            else if (userrole == "Field Coordinator") // Example: Field Coordinator sees only their own requests
-            {
+                // Supervisors see all requests for active projects
                 projectRequests = _context.FCProjectRequests
-                    .Where(pr => pr.AddedBy == currentUser) // Filter by the logged-in user (Field Coordinator)
+                    .Where(req => activeProjectIds.Contains((int)req.ProjectID))
+                    .ToList();
+            }
+            else if (roleName == "Field Coordinator")
+            {
+                // FCs see their own requests for active projects
+                projectRequests = _context.FCProjectRequests
+                    .Where(req => req.AddedBy == currentUser && activeProjectIds.Contains((int)req.ProjectID))
                     .ToList();
             }
             else
             {
-                // Default case if the role is unknown or doesn't match
                 projectRequests = new List<FCProjectRequest>();
             }
 
             return View(projectRequests);
         }
 
-        //GET
+
+        // GET
         public ActionResult Create()
         {
             var activeSupervisors = _context.Supervisors
@@ -57,13 +78,18 @@ namespace CallCentreFollowUps.Controllers
 
             ViewBag.Supervisors = new SelectList(activeSupervisors, "SupervisorID", "Name");
 
-            ViewBag.Projects = new SelectList(_context.Projects, "ProjectID", "ProjectName");
+            // ✅ Only active projects
+            ViewBag.Projects = new SelectList(
+                _context.Projects.Where(p => p.IsActive),
+                "ProjectID",
+                "ProjectName"
+            );
+
             ViewBag.FieldCoordinators = new SelectList(_context.FieldCoordinators, "FieldCoordinatorID", "Name");
 
             return View();
         }
 
-        //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FCProjectRequest model)
@@ -76,7 +102,6 @@ namespace CallCentreFollowUps.Controllers
 
             if (ModelState.IsValid)
             {
-                // Make sure you're comparing against model.SupervisorID properly
                 var supervisor = _context.Supervisors
                                          .FirstOrDefault(s => s.SupervisorID == model.SupervisorID && s.IsActive == true);
 
@@ -87,18 +112,18 @@ namespace CallCentreFollowUps.Controllers
                     return View(model);
                 }
 
-                // Assign and calculate
                 model.SupervisorID = supervisor.SupervisorID;
 
+                // Now also get the SupervisionFee
                 var project = _context.Projects
                                       .Where(p => p.ProjectID == model.ProjectID)
-                                      .Select(p => new { p.PayRate })
+                                      .Select(p => new { p.PayRate, p.SupervisionFee })
                                       .FirstOrDefault();
 
                 if (project != null)
                 {
                     model.Amount = project.PayRate * model.NumberOfInterviews;
-                    model.TotalDue = model.Amount * 0.20m;
+                    model.TotalDue = model.Amount * project.SupervisionFee; 
                 }
                 else
                 {
@@ -117,6 +142,7 @@ namespace CallCentreFollowUps.Controllers
         }
 
 
+
         private void RepopulateDropdowns(FCProjectRequest model)
         {
             var activeSupervisors = _context.Supervisors
@@ -124,7 +150,14 @@ namespace CallCentreFollowUps.Controllers
                                             .Select(s => new { s.SupervisorID, s.Name })
                                             .ToList();
             ViewBag.Supervisors = new SelectList(activeSupervisors, "SupervisorID", "Name", model.SupervisorID);
-            ViewBag.Projects = new SelectList(_context.Projects, "ProjectID", "ProjectName", model.ProjectID);
+            //ViewBag.Projects = new SelectList(_context.Projects, "ProjectID", "ProjectName", model.ProjectID);
+            ViewBag.Projects = new SelectList(
+    _context.Projects.Where(p => p.IsActive), 
+    "ProjectID", 
+    "ProjectName", 
+    model.ProjectID
+);
+
             ViewBag.FieldCoordinators = new SelectList(_context.FieldCoordinators, "FieldCoordinatorID", "Name", model.FieldCoordinatorID);
         }
 

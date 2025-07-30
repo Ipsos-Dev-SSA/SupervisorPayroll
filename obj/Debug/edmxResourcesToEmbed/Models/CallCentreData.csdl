@@ -489,19 +489,19 @@
     <EntitySet Name="tblStagings" EntityType="CallCentreTrackerModel.tblStaging" />
     <EntitySet Name="FieldCoordinators" EntityType="CallCentreTrackerModel.FieldCoordinator" />
     <EntitySet Name="PaymentDetails" EntityType="CallCentreTrackerModel.PaymentDetail" />
-    <EntitySet Name="Projects" EntityType="CallCentreTrackerModel.Project" />
     <EntitySet Name="Supervisors" EntityType="CallCentreTrackerModel.Supervisor" />
     <EntitySet Name="FCProjectRequests" EntityType="CallCentreTrackerModel.FCProjectRequest" />
-    <AssociationSet Name="FK__FCProject__Proje__32CB82C6" Association="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6">
-      <End Role="Project" EntitySet="Projects" />
-      <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
-    </AssociationSet>
     <AssociationSet Name="FK__PaymentDe__Reque__38845C1C" Association="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C">
       <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
       <End Role="PaymentDetail" EntitySet="PaymentDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Employee_Supervisor" Association="CallCentreTrackerModel.FK_Employee_Supervisor">
       <End Role="Supervisor" EntitySet="Supervisors" />
+      <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
+    </AssociationSet>
+    <EntitySet Name="Projects" EntityType="CallCentreTrackerModel.Project" />
+    <AssociationSet Name="FK__FCProject__Proje__32CB82C6" Association="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6">
+      <End Role="Project" EntitySet="Projects" />
       <End Role="FCProjectRequest" EntitySet="FCProjectRequests" />
     </AssociationSet>
   </EntityContainer>
@@ -782,17 +782,6 @@
     <Property Name="PaymentDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="FCProjectRequest" Relationship="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C" FromRole="PaymentDetail" ToRole="FCProjectRequest" />
   </EntityType>
-  <EntityType Name="Project">
-    <Key>
-      <PropertyRef Name="ProjectID" />
-    </Key>
-    <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="ProjectNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PayRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <Property Name="SupervisionFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-    <NavigationProperty Name="FCProjectRequests" Relationship="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" FromRole="Project" ToRole="FCProjectRequest" />
-  </EntityType>
   <EntityType Name="Supervisor">
     <Key>
       <PropertyRef Name="SupervisorID" />
@@ -818,22 +807,10 @@
     <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
     <Property Name="DateRequested" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="AddedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Project" Relationship="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" FromRole="FCProjectRequest" ToRole="Project" />
     <NavigationProperty Name="PaymentDetails" Relationship="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C" FromRole="FCProjectRequest" ToRole="PaymentDetail" />
     <NavigationProperty Name="Supervisor" Relationship="CallCentreTrackerModel.FK_Employee_Supervisor" FromRole="FCProjectRequest" ToRole="Supervisor" />
+    <NavigationProperty Name="Project" Relationship="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" FromRole="FCProjectRequest" ToRole="Project" />
   </EntityType>
-  <Association Name="FK__FCProject__Proje__32CB82C6">
-    <End Type="CallCentreTrackerModel.Project" Role="Project" Multiplicity="0..1" />
-    <End Type="CallCentreTrackerModel.FCProjectRequest" Role="FCProjectRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="FCProjectRequest">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__PaymentDe__Reque__38845C1C">
     <End Type="CallCentreTrackerModel.FCProjectRequest" Role="FCProjectRequest" Multiplicity="0..1" />
     <End Type="CallCentreTrackerModel.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
@@ -855,6 +832,30 @@
       </Principal>
       <Dependent Role="FCProjectRequest">
         <PropertyRef Name="SupervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ProjectNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PayRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="SupervisionFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="FCProjectRequests" Relationship="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" FromRole="Project" ToRole="FCProjectRequest" />
+  </EntityType>
+  <Association Name="FK__FCProject__Proje__32CB82C6">
+    <End Type="CallCentreTrackerModel.Project" Role="Project" Multiplicity="0..1" />
+    <End Type="CallCentreTrackerModel.FCProjectRequest" Role="FCProjectRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="FCProjectRequest">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

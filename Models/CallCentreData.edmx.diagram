@@ -54,12 +54,18 @@
         <EntityTypeShape EntityType="CallCentreTrackerModel.tblStaging" Width="1.5" PointX="13.375" PointY="10.75" />
         <EntityTypeShape EntityType="CallCentreTrackerModel.FieldCoordinator" Width="1.5" PointX="14.375" PointY="0.75" />
         <EntityTypeShape EntityType="CallCentreTrackerModel.PaymentDetail" Width="1.5" PointX="16.875" PointY="17.625" />
-        <EntityTypeShape EntityType="CallCentreTrackerModel.Project" Width="1.5" PointX="12.375" PointY="22.625" />
         <EntityTypeShape EntityType="CallCentreTrackerModel.Supervisor" Width="1.5" PointX="12.375" PointY="15.625" />
         <EntityTypeShape EntityType="CallCentreTrackerModel.FCProjectRequest" Width="1.5" PointX="14.625" PointY="18.5" />
-        <AssociationConnector Association="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" />
         <AssociationConnector Association="CallCentreTrackerModel.FK__PaymentDe__Reque__38845C1C" />
         <AssociationConnector Association="CallCentreTrackerModel.FK_Employee_Supervisor" />
+        <EntityTypeShape EntityType="CallCentreTrackerModel.Project" Width="1.5" PointX="0.75" PointY="20" />
+        <AssociationConnector Association="CallCentreTrackerModel.FK__FCProject__Proje__32CB82C6" ManuallyRouted="true" >
+          <ConnectorPoint PointX="2.25" PointY="20.745072114384655" />
+          <ConnectorPoint PointX="4.065" PointY="20.745072114384655" />
+          <ConnectorPoint PointX="4.065" PointY="22.730286458333339" />
+          <ConnectorPoint PointX="15.375" PointY="22.730286458333339" />
+          <ConnectorPoint PointX="15.375" PointY="22.018697916666667" />
+        </AssociationConnector>
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

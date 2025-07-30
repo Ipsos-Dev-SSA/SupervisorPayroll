@@ -53,8 +53,8 @@ namespace CallCentreFollowUps.Models
         public virtual DbSet<tblStaging> tblStagings { get; set; }
         public virtual DbSet<FieldCoordinator> FieldCoordinators { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Supervisor> Supervisors { get; set; }
         public virtual DbSet<FCProjectRequest> FCProjectRequests { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
     }
 }

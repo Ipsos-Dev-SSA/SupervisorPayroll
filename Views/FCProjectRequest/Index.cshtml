@@ -25,6 +25,7 @@
             <th>Supervisor</th>
             <th>Project Name</th>
             <th>Project Number</th>
+            <th> PC Number</th>
             <th>Number of Interviews</th>
             <th>Pay rate of Interview</th>
             <th>Amount</th>
@@ -43,10 +44,11 @@
                 <td>@request.Supervisor.Name</td>
                 <td>@request.Project.ProjectName</td>
                 <td>@request.Project.ProjectNumber</td>
+               <td>@request.Supervisor.PCNumber</td>
                 <td>@request.NumberOfInterviews</td>
                 <td>@request.Project.PayRate</td>
                 <td>@request.Amount</td>
-                <td>20%</td>
+                <td>@request.Project.SupervisionFee</td>
                 <td>@request.TotalDue</td>
                 <td>@request.DateRequested.ToString("yyyy-MM-dd")</td>
                 <td>@request.Comments</td>

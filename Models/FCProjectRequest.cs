@@ -31,9 +31,9 @@ namespace CallCentreFollowUps.Models
         public System.DateTime DateRequested { get; set; }
         public string AddedBy { get; set; }
     
-        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
         public virtual Supervisor Supervisor { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

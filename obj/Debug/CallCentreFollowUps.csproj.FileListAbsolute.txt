@@ -400,6 +400,8 @@ D:\inetpub\wwwroot\CallCentreTracker_05\CallCentreTracker\obj\Debug\CallCentreFo
 D:\inetpub\wwwroot\CallCentreTracker_05\CallCentreTracker\obj\Debug\CallCentreFollowUps.csproj.CopyComplete
 D:\inetpub\wwwroot\CallCentreTracker_05\CallCentreTracker\obj\Debug\CallCentreFollowUps.dll
 D:\inetpub\wwwroot\CallCentreTracker_05\CallCentreTracker\obj\Debug\CallCentreFollowUps.pdb
+D:\inetpub\wwwroot\SupervisorPayRoll\bin\Microsoft.Win32.Primitives.dll
+D:\inetpub\wwwroot\SupervisorPayRoll\bin\Newtonsoft.Json.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\CallCentreFollowUps.dll.config
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\CallCentreFollowUps.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\CallCentreFollowUps.pdb
@@ -453,7 +455,6 @@ D:\inetpub\wwwroot\SupervisorPayRoll\bin\roslyn\vbc.rsp
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\roslyn\VBCSCompiler.exe
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\roslyn\VBCSCompiler.exe.config
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\inetpub\wwwroot\SupervisorPayRoll\bin\Microsoft.Win32.Primitives.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\netstandard.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\System.AppContext.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\System.Collections.Concurrent.dll
@@ -557,7 +558,6 @@ D:\inetpub\wwwroot\SupervisorPayRoll\bin\ExcelNumberFormat.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\Microsoft.Bcl.HashCode.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\Microsoft.Web.Infrastructure.dll
-D:\inetpub\wwwroot\SupervisorPayRoll\bin\Newtonsoft.Json.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\SixLabors.Fonts.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\System.Buffers.dll
 D:\inetpub\wwwroot\SupervisorPayRoll\bin\System.Memory.dll

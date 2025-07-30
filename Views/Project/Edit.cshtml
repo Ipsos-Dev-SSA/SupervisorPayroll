@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit Project";
 }
 @{
-    Layout = "~/Views/Shared/_LayoutPayroll.cshtml"; <!-- Reference the layout file here -->
+    Layout = "~/Views/Shared/_LayoutPayroll.cshtml"; // Reference the layout file here
 }
 
 <h2>Edit Project</h2>
@@ -26,26 +26,43 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                @Html.LabelFor(m => m.ProjectNumber,"Project Number")
+                @Html.LabelFor(m => m.ProjectNumber, "Project Number")
                 @Html.TextBoxFor(m => m.ProjectNumber, new { @class = "form-control" })
             </div>
         </div>
     </div>
 
     <!-- Second Row: Two fields in one row -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(m => m.PayRate,"Pay Rate")
-                @Html.TextBoxFor(m => m.PayRate, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <!-- Empty column for layout, to keep the balance of the row -->
-        <div class="col-md-6">
-            <!-- Empty div, can be used for another field or left empty if no second field needed -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.PayRate, "Pay Rate")
+            @Html.TextBoxFor(m => m.PayRate, new { @class = "form-control" })
         </div>
     </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.IsActive, "Is Active")
+            @Html.DropDownListFor(m => m.IsActive,
+                new SelectList(new[]
+                {
+                    new { Value = "true", Text = "Active" },
+                    new { Value = "false", Text = "Inactive" }
+                }, "Value", "Text", Model.IsActive.ToString().ToLower()),
+                "Select Status",
+                new { @class = "form-control" })
+        </div>
+    </div>
+  
+
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.SupervisionFee, "Supervision Fee")
+            @Html.TextBoxFor(m => m.SupervisionFee, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
 
     <div class="row">
         <!-- Submit Button -->
@@ -55,7 +72,7 @@
 
         <!-- Back to List Link -->
         <div class="form-group col-md-6">
-            @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
         </div>
-      </div>
-        }
+    </div>
+}

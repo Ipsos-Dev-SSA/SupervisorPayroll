@@ -248,6 +248,7 @@
     <Property Name="ProjectNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="PayRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="SupervisionFee" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Supervisor">
     <Key>

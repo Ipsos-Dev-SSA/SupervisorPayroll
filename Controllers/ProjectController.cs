@@ -68,8 +68,7 @@ namespace CallCentreFollowUps.Controllers
             }
             return View(project);
         }
-
-        // Delete: Delete an existing project
+        // GET: Project/Delete/5
         public ActionResult Delete(int id)
         {
             var project = _context.Projects.FirstOrDefault(p => p.ProjectID == id);
@@ -78,9 +77,26 @@ namespace CallCentreFollowUps.Controllers
                 return HttpNotFound();
             }
 
-            _context.Projects.Remove(project);
+            return View(project); // Return confirmation view
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var project = _context.Projects.FirstOrDefault(p => p.ProjectID == id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Soft delete by setting IsActive = false
+            project.IsActive = false;
             _context.SaveChanges();
+
             return RedirectToAction("Index");
         }
+
+
     }
 }
