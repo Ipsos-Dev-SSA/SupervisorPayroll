@@ -213,37 +213,36 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+
+
+
+    <!-- Jquery JS-->
+    <script src="~/Content/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/Content/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/Content/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS -->
+    <script src="~/Content/vendor/slick/slick.min.js"></script>
+    <script src="~/Content/vendor/wow/wow.min.js"></script>
+    <script src="~/Content/vendor/animsition/animsition.min.js"></script>
+    <script src="~/Content/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="~/Content/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/vendor/counter-up/jquery.counterup.min.js"></script>
+    <script src="~/Content/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="~/Content/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="~/Content/vendor/select2/select2.min.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/Scripts/js/main.js"></script>
+
+    <!-- Render page-specific scripts LAST -->
     @RenderSection("Scripts", required: false)
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <div>
+        <input type="hidden" id="UserId" class="iHidden" name="UserId" value='@ViewBag.CurrentUserId' />
+        <input type="hidden" id="UserFullName" class="iHidden" name="UserFullName" value='@ViewBag.CurrentUserName' />
+        <input type="hidden" id="UserEmailAddress" class="iHidden" name="UserEmailAddress" value='@ViewBag.CurrentUserEmail' />
+    </div>
 </body>
 </html>
-<!-- Jquery JS-->
-<script src="~/Content/vendor/jquery-3.2.1.min.js"></script>
-<!-- Bootstrap JS-->
-<script src="~/Content/vendor/bootstrap-4.1/popper.min.js"></script>
-<script src="~/Content/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-<!-- Vendor JS       -->
-<script src="~/Content/vendor/slick/slick.min.js"></script>
-<script src="~/Content/vendor/wow/wow.min.js"></script>
-<script src="~/Content/vendor/animsition/animsition.min.js"></script>
-<script src="~/Content/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<script src="~/Content/vendor/counter-up/jquery.waypoints.min.js"></script>
-<script src="~/Content/vendor/counter-up/jquery.counterup.min.js"></script>
-<script src="~/Content/vendor/circle-progress/circle-progress.min.js"></script>
-<script src="~/Content/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="~/Content/vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="~/Content/vendor/select2/select2.min.js"></script>
-
-<!-- Main JS-->
-<script src="~/Scripts/js/main.js"></script>
-
-
-
-
-
-<div>
-    <input type="hidden" id="UserId" class="iHidden" name="UserId" value='@ViewBag.CurrentUserId' />
-    <input type="hidden" id="UserFullName" class="iHidden" name="UserFullName" value='@ViewBag.CurrentUserName' />
-    <input type="hidden" id="UserEmailAddress" class="iHidden" name="UserEmailAddress" value='@ViewBag.CurrentUserEmail' />
-</div>
